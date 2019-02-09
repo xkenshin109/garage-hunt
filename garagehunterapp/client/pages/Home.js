@@ -2,15 +2,16 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Button} from 'react-native';
 import {styles} from './PageStyles';
 import {connect} from 'react-redux';
-// export const mapStateToProps = state => {
-//     return {
-//     }
-// };
-//
-// export const mapDispatchToProps = dispatch => {
-//     return {
-//     }
-// };
+export const mapStateToProps = state => {
+    console.log('HOME',state);
+    return {
+    }
+};
+
+export const mapDispatchToProps = dispatch => {
+    return {
+    }
+};
 class HomePage extends React.Component{
     constructor(props){
         super(props);
@@ -29,6 +30,6 @@ class HomePage extends React.Component{
         );
     }
 }
-export default HomePage
-// export default connect(mapStateToProps,mapDispatchToProps)(HomePage)
+// export default HomePage
+export default connect(mapStateToProps,mapDispatchToProps)(HomePage)
 
