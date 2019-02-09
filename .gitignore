@@ -20,7 +20,7 @@ DerivedData
 *.ipa
 *.xcuserstate
 project.xcworkspace
-
+garage-sale-locator/*
 # Gradle
 /build/
 /RNTester/android/app/build/
