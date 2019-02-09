@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logFormatVersion</key>
+	<integer>9</integer>
+	<key>logs</key>
+	<dict>
+		<key>C641C2AC-392C-466E-ABEC-75C8619B16DD</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>C641C2AC-392C-466E-ABEC-75C8619B16DD.xcactivitylog</string>
+			<key>highLevelStatus</key>
+			<string>E</string>
+			<key>schemeIdentifier-containerName</key>
+			<string>garagehunterapp project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>garagehunterapp</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building project garagehunterapp with scheme garagehunterapp and configuration Debug</string>
+			<key>timeStartedRecording</key>
+			<real>571364838.77802098</real>
+			<key>timeStoppedRecording</key>
+			<real>571364843.24744499</real>
+			<key>title</key>
+			<string>Building project garagehunterapp with scheme garagehunterapp and configuration Debug</string>
+			<key>uniqueIdentifier</key>
+			<string>C641C2AC-392C-466E-ABEC-75C8619B16DD</string>
+		</dict>
+		<key>F7C63815-5206-4129-B93A-AC3A6FB0102B</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>F7C63815-5206-4129-B93A-AC3A6FB0102B.xcactivitylog</string>
+			<key>highLevelStatus</key>
+			<string>E</string>
+			<key>schemeIdentifier-containerName</key>
+			<string>garagehunterapp project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>garagehunterapp</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building project garagehunterapp with scheme garagehunterapp and configuration Debug</string>
+			<key>timeStartedRecording</key>
+			<real>571364515.18979394</real>
+			<key>timeStoppedRecording</key>
+			<real>571364520.96534896</real>
+			<key>title</key>
+			<string>Building project garagehunterapp with scheme garagehunterapp and configuration Debug</string>
+			<key>uniqueIdentifier</key>
+			<string>F7C63815-5206-4129-B93A-AC3A6FB0102B</string>
+		</dict>
+	</dict>
+</dict>
+</plist>
