@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from 'react-navigation';
-import { Icon } from 'react-native-elements';
+import {Icon}  from 'react-native-elements';
 import Home from './pages/Home';
 import Listings from './pages/Listings';
 export const Tabs = createBottomTabNavigator({
@@ -8,15 +8,23 @@ export const Tabs = createBottomTabNavigator({
         screen: Listings
     },
     Profile:{
-        screen:Home
+        screen:Home,
+        navigationOptions:({navigation})=>({
+            title:'Profile',
+            tabBarIcon: <Icon color='#f50' name='computer' size={30}></Icon>
+        })
     }
 },{
-    activeTintColor: '#e91e63',
-    labelStyle: {
-        fontSize: 12,
-    },
-    style: {
-        backgroundColor: 'blue',
-    },
+    order:['Profile','Hunts'],
+    tabBarOptions:{
+        activeTintColor: '#e91e63',
+        labelStyle: {
+            fontSize: 12,
+        },
+        style: {
+            backgroundColor: 'blue',
+        },
+        showIcon:true
+    }
 });
 

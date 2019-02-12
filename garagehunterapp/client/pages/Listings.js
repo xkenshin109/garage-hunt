@@ -1,8 +1,10 @@
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View,FlatList} from 'react-native';
+import React from 'react';
+import {Platform, Text, View, Button} from 'react-native';
 import {styles} from "./PageStyles";
-import {getApi,postApi} from '../services/huntdb';
 import {connect} from 'react-redux';
+
+import HuntTableList from '../components/HuntTableList';
+import AddHunt from '../components/AddHunt';
 export const mapStateToProps = state => {
     console.log('HUNTS',state);
     return {
@@ -21,29 +23,31 @@ class ListingsPage extends React.Component{
     }
     state ={
         loaded: true,
-        user_id: null,
-        hunts:[]
+        showModal:false,
     };
-    componentDidMount(){
-        let self = this;
-        return getApi('SiteListings')
-            .then((listings)=>{
-                self.state.hunts = listings.data.map((l,i)=>{return{key:i.toString(),item:l}});
-                console.log('STATE',self.state);
-            })
+    showModal(show){
+        this.setState({showModal:show});
     }
-
     render() {
         let self = this;
+        if(self.state.showModal){
+            return (
+                <View style={styles.container}>
+                    <AddHunt
+                        parent={self}
+                        user_d={self.props.user_id}
+                    />
+                </View>
+            )
+        }
         return (
             <View style={styles.container}>
-                <FlatList
-                    data={self.state.hunts}
-                    renderItem={(item,index)=>
-                        <View>
-                            <Text>{item.item.address?item.item.address:"NO ADDRESS PROVIDED..."}</Text>
-                        </View>
-                    }
+                <Button
+                    title={"Add"}
+                    onPress={()=>{self.showModal(true)}}
+                />
+                <HuntTableList
+                    user_id = {self.props.user_id}
                 />
             </View>
         );
