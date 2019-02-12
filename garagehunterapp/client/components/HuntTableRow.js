@@ -51,6 +51,9 @@ class HuntTableRow extends React.Component{
         let self = this;
         const {hunt} = self.props;
         return (
+                <TouchableHighlight
+                    onPress={()=>{self.showDetails(self)}}
+                >
                 <View style={this.styles().container}>
                     <View style={{flex:2}}>
                         {self.renderMap()}
@@ -61,6 +64,7 @@ class HuntTableRow extends React.Component{
                         <Text>LATITUDE: {hunt.latitude}</Text>
                     </View>
                 </View>
+                </TouchableHighlight>
 
         );
     }

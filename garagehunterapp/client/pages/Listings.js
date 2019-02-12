@@ -24,15 +24,10 @@ class ListingsPage extends React.Component{
     }
     state ={
         loaded: true,
-        showModal:false,
-        showDetails:false,
-        selectedHunt:{}
+        showModal:false
     };
     showModal(show){
         this.setState({showModal:show});
-    }
-    showDetails = (hunt,show)=>{
-        this.setState({showDetails:show,showModal:false,selectedHunt:hunt});
     }
     render() {
         let self = this;
@@ -42,16 +37,6 @@ class ListingsPage extends React.Component{
                     <AddHunt
                         parent={self}
                         user_d={self.props.user_id}
-                    />
-                </View>
-            )
-        }
-        if(self.state.showDetails){
-            return (
-                <View>
-                    <HuntDetails
-                        hunt ={self.state.selectedHunt}
-                        parent = {self}
                     />
                 </View>
             )

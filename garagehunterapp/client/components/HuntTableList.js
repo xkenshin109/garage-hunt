@@ -1,17 +1,20 @@
 import React, {Component} from 'react';
-import {Platform, View, FlatList} from 'react-native';
+import {Platform, View, FlatList,Text} from 'react-native';
 import {getApi} from '../services/huntdb';
 import {styles} from '../pages/PageStyles';
 import {connect} from 'react-redux';
 
 import HuntTableRow from './HuntTableRow';
+import HuntDetails from './HuntDetails';
 class HuntTableList extends React.Component{
     constructor(props){
         super(props);
     }
     state ={
         loading: true,
-        hunts:[]
+        hunts:[],
+        selectedHunt:{},
+        showDetails:false
     };
     componentDidMount(){
         let self = this;
@@ -22,10 +25,26 @@ class HuntTableList extends React.Component{
             })
     }
     showDetails=(hunt,show)=>{
-        this.props.parent.showDetails(hunt,show);
-    }
+        let self = this;
+        self.setState({selectedHunt:hunt,showDetails:show});
+    };
     render() {
         let self = this;
+        if(self.state.loading){
+            return(
+                <View>
+                    <Text>Loading</Text>
+                </View>
+            )
+        }
+        if(self.state.showDetails && self.state.selectedHunt){
+            return(
+                <HuntDetails
+                    hunt={self.state.selectedHunt}
+                    parent={self}
+                />
+            );
+        }
         return (
             <View style={styles.container}>
                 <FlatList

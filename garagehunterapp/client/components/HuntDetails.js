@@ -1,10 +1,10 @@
 import React from 'react';
-import {Platform, StyleSheet, Text, View, Button, Dimensions,Image, } from 'react-native';
+import {Platform, StyleSheet, Text, View, Button, Dimensions,Image } from 'react-native';
 import MapView from 'react-native-maps';
 const _HEIGHT = Dimensions.get('window').height;
 const _WIDTH = Dimensions.get('window').width;
 
-class HuntTableRow extends React.Component{
+class HuntDetails extends React.Component{
 
     constructor(props){
         super(props);
@@ -16,7 +16,15 @@ class HuntTableRow extends React.Component{
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
-                flexDirection:"row"
+                flexDirection:"column"
+            },
+            mapContainer:{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                flex:2
             },
             imageRow:{
                 flex:1,
@@ -25,33 +33,33 @@ class HuntTableRow extends React.Component{
             }
         });
     };
-    renderMap = () =>{
-        let self = this;
-        if(!self.props.hunt.longitude || !self.props.hunt.latitude){
-            return (
-                <Image
-                    style={self.styles().imageRow}
-                    source={require('../assets/not_available.jpg')} />
-            )
-        }
-        return (
-            <Image
-                style={self.styles().imageRow}
-                source={require('../assets/not_available.jpg')} />
-        )
-    };
     render() {
         let self = this;
         const {hunt} = self.props;
-        return (
-            <View style={this.styles().container}
-                  onPress={()=>{
-                      console.log('It does');
-                  }}>
-                <View style={{flex:2}}>
-                    {self.renderMap()}
+        if(!self.props.hunt){
+            return(
+                <View>
+                    <Image
+                        style={self.styles().imageRow}
+                        source={require('../assets/not_available.jpg')} />
+                    <Text>No Garage Sale</Text>
                 </View>
-                <View style={{flex:4}}>
+            )
+        }
+        return (
+            <View style={this.styles().container}>
+                <View style={this.styles().mapContainer}>
+                    <MapView
+                        style={this.styles().mapContainer}
+                        initialRegion={{
+                            latitude: self.props.hunt.latitude,
+                            longitude: self.props.hunt.longitude,
+                            latitudeDelta: 0.0922,
+                            longitudeDelta: 0.0421
+                        }}
+                    />
+                </View>
+                <View style={{flex:2}}>
                     <Text>{hunt.address?hunt.address:""}</Text>
                     <Text>LONGITUDE: {hunt.longitude}</Text>
                     <Text>LATITUDE: {hunt.latitude}</Text>
@@ -61,4 +69,4 @@ class HuntTableRow extends React.Component{
     }
 }
 // export default HomePage
-export default HuntTableRow
+export default HuntDetails
