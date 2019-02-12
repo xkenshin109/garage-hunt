@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Button} from 'react-native';
 import {styles} from './PageStyles';
 import {connect} from 'react-redux';
+import AccountDetails from '../components/AccountDetails';
 export const mapStateToProps = state => {
     console.log('HOME',state);
     return {
+        user_id: state.passport.userId
     }
 };
 
@@ -20,12 +22,13 @@ class HomePage extends React.Component{
         loaded: true
     };
     render() {
-        const { navigate } = this.props.navigation;
+        let self = this;
         return (
             <View style={styles.container}>
-                <Text>This is the Home Page</Text>
-                <Button title={"Next Tab"}
-                        onPress={() => navigate('Listings')}/>
+                <AccountDetails
+                    user_id={self.props.user_id}
+                    parent = {self}
+                />
             </View>
         );
     }

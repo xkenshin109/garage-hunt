@@ -21,6 +21,9 @@ class HuntTableList extends React.Component{
                 self.setState({loading:false,hunts:huntList});
             })
     }
+    showDetails=(hunt,show)=>{
+        this.props.parent.showDetails(hunt,show);
+    }
     render() {
         let self = this;
         return (
@@ -33,6 +36,7 @@ class HuntTableList extends React.Component{
                                 userId = {self.props.user_id}
                                 hunt = {item.item}
                                 color = {index%2===0?'even':'odd'}
+                                parent = {self}
                             />
                         )
                     }

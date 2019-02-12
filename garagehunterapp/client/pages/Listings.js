@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 
 import HuntTableList from '../components/HuntTableList';
 import AddHunt from '../components/AddHunt';
+import HuntDetails from '../components/HuntDetails';
 export const mapStateToProps = state => {
     console.log('HUNTS',state);
     return {
@@ -24,9 +25,14 @@ class ListingsPage extends React.Component{
     state ={
         loaded: true,
         showModal:false,
+        showDetails:false,
+        selectedHunt:{}
     };
     showModal(show){
         this.setState({showModal:show});
+    }
+    showDetails = (hunt,show)=>{
+        this.setState({showDetails:show,showModal:false,selectedHunt:hunt});
     }
     render() {
         let self = this;
@@ -40,6 +46,16 @@ class ListingsPage extends React.Component{
                 </View>
             )
         }
+        if(self.state.showDetails){
+            return (
+                <View>
+                    <HuntDetails
+                        hunt ={self.state.selectedHunt}
+                        parent = {self}
+                    />
+                </View>
+            )
+        }
         return (
             <View style={styles.container}>
                 <Button
@@ -48,6 +64,7 @@ class ListingsPage extends React.Component{
                 />
                 <HuntTableList
                     user_id = {self.props.user_id}
+                    parent = {self}
                 />
             </View>
         );

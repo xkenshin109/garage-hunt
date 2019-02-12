@@ -4,7 +4,7 @@ let defaultState = {
     auth:{
         loggedIn: false
     },
-    userId:5,
+    userId:1,
     lookups:{}
 };
 
