@@ -1,10 +1,12 @@
 import React from 'react';
+import {createStackNavigator} from 'react-navigation';
 import {Platform, Text, View, Button} from 'react-native';
 import {styles} from "./PageStyles";
 import {connect} from 'react-redux';
 
 import HuntTableList from '../components/HuntTableList';
 import AddHunt from '../components/AddHunt';
+import {Icon} from "react-native-elements";
 export const mapStateToProps = state => {
     console.log('HUNTS',state);
     return {
@@ -58,5 +60,14 @@ class FavoritesPage extends React.Component{
         );
     }
 }
-// export default ListingsPage
-export default connect(mapStateToProps,mapDispatchToProps)(FavoritesPage)
+const stackExport = createStackNavigator({
+    Favorites:{
+        screen:connect(mapStateToProps,mapDispatchToProps)(FavoritesPage),
+        navigationOptions:({navigation})=>({
+            title:'Favorites',
+            tabBarIcon: <Icon color='#f50' name='favorite-border' size={30} />
+        })
+    }
+});
+
+export default stackExport

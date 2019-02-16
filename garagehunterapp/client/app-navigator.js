@@ -1,9 +1,19 @@
 import { createStackNavigator } from 'react-navigation';
-import Home from './pages/Home';
-import Listings from './pages/Listings';
+import {DrawNavigator} from './drawer-navigation';
+import {Icon}  from 'react-native-elements';
+
+import React from "react";
+
 const AppNavigator = createStackNavigator({
-    Home: { screen: Home },
-    Listings:{ screen: Listings }
+    DrawerStack: DrawNavigator
+},{
+    headerMode: 'float',
+    navigationOptions: ({navigation}) => ({
+        headerStyle: {backgroundColor: '#006bd6'},
+        title: 'Welcome!',
+        headerTintColor: 'white',
+        headerLeft: <Icon color='#f50' name='reorder' size={40} onPress={()=>{navigation.openDrawer()}} />
+    })
 });
 
 export default AppNavigator;

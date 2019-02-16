@@ -1,9 +1,9 @@
 import React from 'react';
 import {Platform, StyleSheet, Text, View, Button, Dimensions,Image, TouchableHighlight } from 'react-native';
-import MapView from 'react-native-maps';
+import {Card} from 'react-native-elements';
 const _HEIGHT = Dimensions.get('window').height;
 const _WIDTH = Dimensions.get('window').width;
-
+import {styles} from './Styles';
 class HuntTableRow extends React.Component{
 
     constructor(props){
@@ -18,7 +18,7 @@ class HuntTableRow extends React.Component{
               alignItems: 'center',
               width: rowSize._width,
               height: rowSize._height,
-              backgroundColor: (this.props.color==="even"?'#FFD45F':'#FFFCF3'),
+              backgroundColor: 'white',
               flexDirection:"row"
           },
           imageRow:{
@@ -28,7 +28,9 @@ class HuntTableRow extends React.Component{
           }
       });
     };
+    componentWillUnmount(){
 
+    }
     showDetails = (self) => {
        self.props.parent.showDetails(self.props.hunt,true);
     };
@@ -37,13 +39,13 @@ class HuntTableRow extends React.Component{
         if(!self.props.hunt.longitude || !self.props.hunt.latitude){
             return (
                 <Image
-                    style={self.styles().imageRow}
+                    style={styles.imageRow}
                     source={require('../assets/not_available.jpg')} />
             )
         }
         return (
             <Image
-                style={self.styles().imageRow}
+                style={styles.imageRow}
                 source={require('../assets/icon1.jpg')} />
         )
     };
@@ -51,10 +53,11 @@ class HuntTableRow extends React.Component{
         let self = this;
         const {hunt} = self.props;
         return (
+            <Card title={hunt.address?hunt.address:""} titleStyle={{fontWeight:'bold'}}>
                 <TouchableHighlight
                     onPress={()=>{self.showDetails(self)}}
                 >
-                <View style={this.styles().container}>
+                <View style={styles.tableContainer}>
                     <View style={{flex:2}}>
                         {self.renderMap()}
                     </View>
@@ -65,7 +68,7 @@ class HuntTableRow extends React.Component{
                     </View>
                 </View>
                 </TouchableHighlight>
-
+            </Card>
         );
     }
 }

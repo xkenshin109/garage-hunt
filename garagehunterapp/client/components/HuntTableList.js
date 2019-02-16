@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {createStackNavigator} from 'react-navigation';
 import {Platform, View, FlatList,Text} from 'react-native';
 import {getApi} from '../services/huntdb';
 import {styles} from '../pages/PageStyles';
@@ -7,6 +8,7 @@ import {connect} from 'react-redux';
 import HuntTableRow from './HuntTableRow';
 import HuntDetails from './HuntDetails';
 class HuntTableList extends React.Component{
+
     constructor(props){
         super(props);
     }
@@ -18,7 +20,7 @@ class HuntTableList extends React.Component{
     };
     componentDidMount(){
         let self = this;
-        return getApi('SiteListings')
+        return getApi('Hunts')
             .then((hunts)=>{
                 const huntList = hunts.data.map((h,i)=>{return {key:i.toString(),item:h}});
                 self.setState({loading:false,hunts:huntList});
@@ -26,7 +28,8 @@ class HuntTableList extends React.Component{
     }
     showDetails=(hunt,show)=>{
         let self = this;
-        self.setState({selectedHunt:hunt,showDetails:show});
+        self.props.parent.showDetails(hunt);
+        // self.setState({selectedHunt:hunt,showDetails:show});
     };
     render() {
         let self = this;
@@ -37,14 +40,14 @@ class HuntTableList extends React.Component{
                 </View>
             )
         }
-        if(self.state.showDetails && self.state.selectedHunt){
-            return(
-                <HuntDetails
-                    hunt={self.state.selectedHunt}
-                    parent={self}
-                />
-            );
-        }
+        // if(self.state.showDetails && self.state.selectedHunt){
+        //     return(
+        //         <HuntDetails
+        //             hunt={self.state.selectedHunt}
+        //             parent={self}
+        //         />
+        //     );
+        // }
         return (
             <View style={styles.container}>
                 <FlatList
@@ -64,6 +67,20 @@ class HuntTableList extends React.Component{
     );
     }
 }
+// const stackExport = createStackNavigator({
+//     HuntTableList: {
+//         screen: HuntTableList,
+//         navigationOptions:{
+//             title:'Hunts'
+//         }
+//     },
+//     HuntDetails: {
+//         screen: HuntDetails,
+//         navigationOptions: {
+//             title:'Details'
+//         }
+//     }
+// });
 // export default HomePage
-export default HuntTableList
+export default HuntTableList;
 

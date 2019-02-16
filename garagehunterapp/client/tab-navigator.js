@@ -2,8 +2,9 @@ import React from 'react';
 import { createBottomTabNavigator } from 'react-navigation';
 import {Icon}  from 'react-native-elements';
 import Home from './pages/Home';
-import Listings from './pages/Listings';
+import Listings from './pages/Hunts';
 import Favorites from './pages/Favorites';
+
 export const Tabs = createBottomTabNavigator({
     Hunts:{
         screen: Listings,
@@ -27,6 +28,7 @@ export const Tabs = createBottomTabNavigator({
         })
     }
 },{
+    header:'none',
     order:['Profile','Hunts','Favorites'],
     tabBarOptions:{
         activeTintColor: '#e91e63',

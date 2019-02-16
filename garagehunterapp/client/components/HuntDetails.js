@@ -1,11 +1,18 @@
 import React from 'react';
 import {Platform, StyleSheet, Text, View, Button, Dimensions,Image } from 'react-native';
+import {Card} from 'react-native-elements';
 import MapView from 'react-native-maps';
 const _HEIGHT = Dimensions.get('window').height;
 const _WIDTH = Dimensions.get('window').width;
 
 class HuntDetails extends React.Component{
+    static navigationOptions =({navigation,navigationOptions})=>{
 
+    };
+    state = {
+      parent: null,
+      hunt: null,
+    };
     constructor(props){
         super(props);
     }
@@ -19,12 +26,9 @@ class HuntDetails extends React.Component{
                 flexDirection:"column"
             },
             mapContainer:{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                flex:2
+                // position: 'absolute',
+                width:_WIDTH * .85,
+                flex:1
             },
             imageRow:{
                 flex:1,
@@ -35,8 +39,8 @@ class HuntDetails extends React.Component{
     };
     render() {
         let self = this;
-        const {hunt} = self.props;
-        if(!self.props.hunt){
+        const hunt = self.props.navigation.state.params.hunt;
+        if(!hunt){
             return(
                 <View>
                     <Image
@@ -48,22 +52,39 @@ class HuntDetails extends React.Component{
         }
         return (
             <View style={this.styles().container}>
-                <View style={this.styles().mapContainer}>
+                <Card title={"Map Location"}>
+                <View style={{flex:1}}>
+
                     <MapView
                         style={this.styles().mapContainer}
                         initialRegion={{
-                            latitude: self.props.hunt.latitude,
-                            longitude: self.props.hunt.longitude,
-                            latitudeDelta: 0.0922,
-                            longitudeDelta: 0.0421
+                            latitude: hunt.latitude,
+                            longitude: hunt.longitude,
+                            latitudeDelta: 0.00822,
+                            longitudeDelta: 0.00621
                         }}
-                    />
+                        scrollEnabled={false}
+                        pitchEnabled={false}
+                        rotateEnabled={false}
+                        zoomEnabled={true}
+
+
+                    >
+                        <MapView.Marker
+                            coordinate={{longitude:hunt.longitude,latitude:hunt.latitude}}
+                            title={"Testing"}
+                            description={"Testing again"}
+                        />
+                    </MapView>
                 </View>
+                </Card>
+                <Card title={"Hunter Data"}>
                 <View style={{flex:2}}>
                     <Text>{hunt.address?hunt.address:""}</Text>
                     <Text>LONGITUDE: {hunt.longitude}</Text>
                     <Text>LATITUDE: {hunt.latitude}</Text>
                 </View>
+                </Card>
             </View>
         );
     }
