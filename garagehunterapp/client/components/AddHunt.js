@@ -62,8 +62,8 @@ class AddHunt extends React.Component{
         return (
 
             <View style={styles.container}>
-                <Card>
-                    <View style={{borderWidth:1,borderColor:'black'}}>
+                <Card style={{flex:1}}>
+                    <View style={{borderWidth:1}}>
                         <Text style={styles.textHeader}>Enter the Address</Text>
                         <TextInput
                             style={styles.textInput}
@@ -71,8 +71,8 @@ class AddHunt extends React.Component{
                         />
                     </View>
                 </Card>
-                <Card>
-                    <ScrollView style={{flex:2,borderColor:'black'}}>
+                <Card style={{flex:4}}>
+                    <View>
                         <Text style={styles.textHeader}>Enter the Address</Text>
                         <TextInput
                             style={styles.textInput}
@@ -127,9 +127,9 @@ class AddHunt extends React.Component{
                             }}
                             onDateChange={(date) =>{self._onChange({end_datetime: date})}}
                         />
-                    </ScrollView>
+                    </View>
                 </Card>
-                <Card>
+                <Card style={{flex:1}}>
                     <View style={{flexDirection:'column'}}>
                         <View style={{alignItems:'stretch'}}>
                             <Button

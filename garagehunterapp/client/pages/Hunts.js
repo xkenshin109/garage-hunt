@@ -21,10 +21,7 @@ export const mapDispatchToProps = dispatch => {
     }
 };
 class ListingsPage extends React.Component{
-    static navigationOptions = {
-        title:'Hunts',
 
-    };
     constructor(props){
         super(props);
     }
@@ -78,5 +75,7 @@ const stackExport = createStackNavigator({
             title:'Details'
         }
     }
+},{
+    headerMode:'none'
 });
 export default stackExport

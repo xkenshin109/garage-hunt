@@ -1,4 +1,4 @@
-import {Tabs} from '../tab-navigator';
+import {Tabs} from '../navigators/tab-navigator';
 import reducers from './reducers';
 import {combineReducers} from "redux";
 

@@ -64,10 +64,11 @@ const stackExport = createStackNavigator({
     Favorites:{
         screen:connect(mapStateToProps,mapDispatchToProps)(FavoritesPage),
         navigationOptions:({navigation})=>({
-            title:'Favorites',
             tabBarIcon: <Icon color='#f50' name='favorite-border' size={30} />
         })
     }
+},{
+    headerMode:'none'
 });
 
 export default stackExport

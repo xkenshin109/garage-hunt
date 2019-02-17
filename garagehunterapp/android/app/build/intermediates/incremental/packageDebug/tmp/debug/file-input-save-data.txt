@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Mon Feb 11 20:07:02 CST 2019
+#Sat Feb 16 16:14:58 CST 2019
 56.path=lib/x86/libjsc.so
 5.base=C\:\\Git\\garage-hunt-app\\garagehunterapp\\android\\app\\build\\intermediates\\merged_assets\\debug\\mergeDebugAssets\\out
 42.base=C\:\\Git\\garage-hunt-app\\garagehunterapp\\android\\app\\build\\intermediates\\merged_assets\\debug\\mergeDebugAssets\\out

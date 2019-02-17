@@ -24,8 +24,9 @@ Component.propTypes = {
 };
 
 class HomePage extends React.Component{
+
     static navigationOptions = {
-        drawerLabel: 'Home',
+        drawerLabel: 'Profile',
         drawerIcon: ({ tintColor }) => (
             <Icon color='#f50' name='person' size={30} />
                 )
@@ -55,10 +56,11 @@ const stackExport = createStackNavigator({
    Profile:{
        screen: connect(mapStateToProps,mapDispatchToProps)(HomePage),
        navigationOptions:({navigation})=>({
-           title:'Profile',
            drawerIcon: <Icon color='#f50' name='person' size={30} />
        })
    }
+},{
+    headerMode:'none'
 });
 export default stackExport
 
