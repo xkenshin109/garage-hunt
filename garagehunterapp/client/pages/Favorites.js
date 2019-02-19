@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from 'react-navigation';
-import {Platform, Text, View, Button} from 'react-native';
+import {Platform, Text, View} from 'react-native';
 import {styles} from "./PageStyles";
 import {connect} from 'react-redux';
 
@@ -48,10 +48,6 @@ class FavoritesPage extends React.Component{
         }
         return (
             <View style={styles.container}>
-                <Button
-                    title={"Add"}
-                    onPress={()=>{self.showModal(true)}}
-                />
                 <HuntTableList
                     user_id = {self.props.user_id}
                     parent = {self}

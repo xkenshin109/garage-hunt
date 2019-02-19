@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, {Component} from 'react';
 import {
     Platform,
@@ -25,8 +26,8 @@ class AddHunt extends React.Component{
             address:'',
             longitude:0.0,
             latitude:0.0,
-            start_datetime:null,
-            end_datetime:null,
+            start_date:null,
+            end_date:null,
             active:1,
             description:''
         }
@@ -36,6 +37,12 @@ class AddHunt extends React.Component{
     callParent = ()=>{
         this.props.parent.setState({showModal:false});
         console.log(this);
+    };
+    saveHunt = ()=>{
+        let self = this;
+        let hunt = self.state.newHunt;
+        hunt.Account_id = self.props.user_id;
+        return postApi('Hunts/Address',hunt);
     };
     async openDatePicker(){
         try{
@@ -68,20 +75,26 @@ class AddHunt extends React.Component{
                         <TextInput
                             style={styles.textInput}
                             value={self.state.newHunt.address}
+                            onChangeText={(text)=>{
+                                self._onChange({address:text})
+                            }}
                         />
                     </View>
                 </Card>
                 <Card style={{flex:4}}>
                     <View>
-                        <Text style={styles.textHeader}>Enter the Address</Text>
+                        <Text style={styles.textHeader}>Description</Text>
                         <TextInput
                             style={styles.textInput}
-                            value={self.state.newHunt.address}
+                            value={self.state.newHunt.description}
+                            onChangeText={(text)=>{
+                                self._onChange({description:text})
+                            }}
                         />
                         <Text style={styles.textHeader}>Enter a description</Text>
                         <DatePicker
                             style={{width: 200}}
-                            date={self.state.newHunt.start_datetime}
+                            date={self.state.newHunt.start_date}
                             mode="date"
                             placeholder="select start date"
                             format="YYYY-MM-DD"
@@ -101,16 +114,16 @@ class AddHunt extends React.Component{
                                 }
                                 // ... You can check the source to find the other keys.
                             }}
-                            onDateChange={(date) =>{self._onChange({start_datetime: date})}}
+                            onDateChange={(date) =>{self._onChange({start_date: date})}}
                         />
                         <DatePicker
                             style={{width: 200}}
-                            date={self.state.newHunt.end_datetime}
+                            date={self.state.newHunt.end_date}
                             mode="date"
                             placeholder="select start date"
                             format="YYYY-MM-DD"
-                            minDate="2016-05-01"
-                            maxDate="2016-06-01"
+                            minDate={moment().format('YYYY-MM-DD')}
+                            maxDate="2025-12-30"
                             confirmBtnText="Confirm"
                             cancelBtnText="Cancel"
                             customStyles={{
@@ -125,7 +138,7 @@ class AddHunt extends React.Component{
                                 }
                                 // ... You can check the source to find the other keys.
                             }}
-                            onDateChange={(date) =>{self._onChange({end_datetime: date})}}
+                            onDateChange={(date) =>{self._onChange({end_date: date})}}
                         />
                     </View>
                 </Card>
@@ -134,13 +147,10 @@ class AddHunt extends React.Component{
                         <View style={{alignItems:'stretch'}}>
                             <Button
                                 title={"Save"}
-                                onPress={()=>{return this.openDatePicker()
-                                    .then((date)=>{
-                                        let endDate= new Date(date.year,date.month,date.day);
-                                        self.setState({newHunt:{
-                                                ...self.state.newHunt,
-                                                end_datetime: endDate
-                                            }});
+                                onPress={()=>{return self.saveHunt()
+                                    .then((hunt)=>{
+                                        console.log('NEW HUNT SAVED',hunt);
+                                        self.callParent();
                                     })
                                 }}
                             />

@@ -46,7 +46,7 @@ class ListingsPage extends React.Component{
                 <View style={styles.container}>
                     <AddHunt
                         parent={self}
-                        user_d={self.props.user_id}
+                        user_id={self.props.user_id}
                     />
                 </View>
             )
