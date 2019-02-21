@@ -1,6 +1,6 @@
 import React from 'react';
 import {Platform, StyleSheet, Text, View, Button, Dimensions,Image, TouchableHighlight } from 'react-native';
-import {Card} from 'react-native-elements';
+import {Card,Icon} from 'react-native-elements';
 const _HEIGHT = Dimensions.get('window').height;
 const _WIDTH = Dimensions.get('window').width;
 import {styles} from './Styles';
@@ -49,11 +49,22 @@ class HuntTableRow extends React.Component{
                 source={require('../assets/icon1.jpg')} />
         )
     };
+    favoriteButton(){
+        let self = this;
+        return (
+          <Icon
+              name='favorite-border'
+              onPress={()=>{
+                  console.log('made it');
+              }}
+          />
+        );
+    }
     render() {
         let self = this;
         const {hunt} = self.props;
         return (
-            <Card title={hunt.address?hunt.address:""} titleStyle={{fontWeight:'bold'}}>
+            <Card title={`${hunt.address?hunt.address:""}`} titleStyle={{fontWeight:'bold'}}>
                 <TouchableHighlight
                     onPress={()=>{self.showDetails(self)}}
                 >

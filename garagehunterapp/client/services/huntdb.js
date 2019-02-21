@@ -22,15 +22,9 @@ export const postApi = (method,data) =>{
     })
         .then((res)=>{
             return res.json();
-        });
+        })
+        .catch((err)=>{
+            console.log(err);
+        });;
 };
 
-function encodeRequest(data){
-    let ret = [];
-    for(let prop in data){
-        let key = encodeURIComponent(prop);
-        let value = encodeURIComponent(data[prop]);
-        ret.push(key+'='+value);
-    }
-    return ret.join('&');
-}

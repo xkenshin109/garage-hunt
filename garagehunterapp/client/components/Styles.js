@@ -23,22 +23,32 @@ export const styles = StyleSheet.create({
         backgroundColor: 'white',
         flexDirection:"row"
     },
-    textInput:{
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        backgroundColor:'white'
-    },
-    textHeader:{
-        fontWeight: 'bold',
-        fontSize:12
-    },
     cardTitle:{
         backgroundColor: '#006bd6'
     },
     imageRow:{
         flex:1,
         width: rowSize._width*.3,
-        height: rowSize._height,
+        height: rowSize._height
+    },
+    validations:{
+        borderWidth: 1,
+        borderColor: '#FF0000',
+        height: 40,
+        backgroundColor:'white',
+        alignItems: 'center'
+    },
+    textInput:{
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        backgroundColor:'white',
+        alignItems: 'center'
+    },
+    textHeader:{
+        fontWeight: 'bold',
+        fontSize:12,
+        textAlign: 'center',
+        alignItems: 'center'
     }
 });

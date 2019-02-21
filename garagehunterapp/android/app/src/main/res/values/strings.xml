@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">garagehunterapp</string>
+    <string name="facebook_app_id">2203892903261060</string>
+    <string name="fb_login_protocol_scheme">fb2203892903261060</string>
 </resources>

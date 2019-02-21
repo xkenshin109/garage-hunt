@@ -1,7 +1,7 @@
 package com.garagehunterapp;
 
 import com.facebook.react.ReactActivity;
-
+import android.content.Intent;
 public class MainActivity extends ReactActivity {
 
     /**
@@ -11,5 +11,10 @@ public class MainActivity extends ReactActivity {
     @Override
     protected String getMainComponentName() {
         return "garagehunterapp";
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        MainApplication.getCallbackManager().onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

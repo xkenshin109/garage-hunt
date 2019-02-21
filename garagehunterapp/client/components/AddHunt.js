@@ -1,26 +1,22 @@
-import moment from 'moment';
-import React, {Component} from 'react';
+import React from 'react';
 import {
-    Platform,
     View,
-    DatePickerAndroid,
-    DatePickerIOS,
-    TextInput,
     Button,
     Text,
     ScrollView
 } from 'react-native';
 import {Card} from 'react-native-elements';
-import DatePicker from 'react-native-datepicker';
 import {postApi} from '../services/huntdb';
 import {styles} from './Styles';
-
+import TextField from './modules/TextField';
+import DateField from './modules/DatePicker';
 class AddHunt extends React.Component{
     constructor(props){
         super(props);
     }
     state ={
         loading: true,
+
         newHunt:{
             id:0,
             address:'',
@@ -44,103 +40,46 @@ class AddHunt extends React.Component{
         hunt.Account_id = self.props.user_id;
         return postApi('Hunts/Address',hunt);
     };
-    async openDatePicker(){
-        try{
-            const {action,year,month,day} = await DatePickerAndroid.open({
-                date: new Date(2019,2,11)
-            });
-            if(action !== DatePickerAndroid.dismissedAction){
-                return {year,month,day}
-            }
-        }catch(err){
-            console.log(err);
-        }
-    }
-    _onChange(data){
+    updateState = (data)=>{
         let self = this;
         let hunt = self.state.newHunt;
-        Object.keys(data).forEach((prop,index)=>{
+        Object.keys(data).forEach((prop,i)=>{
            hunt[prop] = data[prop];
         });
         self.setState({newHunt:hunt});
-    }
+    };
     render() {
         let self = this;
         return (
 
             <View style={styles.container}>
                 <Card style={{flex:1}}>
-                    <View style={{borderWidth:1}}>
-                        <Text style={styles.textHeader}>Enter the Address</Text>
-                        <TextInput
-                            style={styles.textInput}
-                            value={self.state.newHunt.address}
-                            onChangeText={(text)=>{
-                                self._onChange({address:text})
-                            }}
-                        />
-                    </View>
+                    <TextField
+                        parent={self}
+                        name={'address'}
+                        header={'Enter the Address'}
+                        required={true}
+                    />
                 </Card>
-                <Card style={{flex:4}}>
-                    <View>
-                        <Text style={styles.textHeader}>Description</Text>
-                        <TextInput
-                            style={styles.textInput}
-                            value={self.state.newHunt.description}
-                            onChangeText={(text)=>{
-                                self._onChange({description:text})
-                            }}
-                        />
-                        <Text style={styles.textHeader}>Enter a description</Text>
-                        <DatePicker
-                            style={{width: 200}}
-                            date={self.state.newHunt.start_date}
-                            mode="date"
-                            placeholder="select start date"
-                            format="YYYY-MM-DD"
-                            minDate="2016-05-01"
-                            maxDate="2016-06-01"
-                            confirmBtnText="Confirm"
-                            cancelBtnText="Cancel"
-                            customStyles={{
-                                dateIcon: {
-                                    position: 'absolute',
-                                    left: 0,
-                                    top: 4,
-                                    marginLeft: 0
-                                },
-                                dateInput: {
-                                    marginLeft: 36
-                                }
-                                // ... You can check the source to find the other keys.
-                            }}
-                            onDateChange={(date) =>{self._onChange({start_date: date})}}
-                        />
-                        <DatePicker
-                            style={{width: 200}}
-                            date={self.state.newHunt.end_date}
-                            mode="date"
-                            placeholder="select start date"
-                            format="YYYY-MM-DD"
-                            minDate={moment().format('YYYY-MM-DD')}
-                            maxDate="2025-12-30"
-                            confirmBtnText="Confirm"
-                            cancelBtnText="Cancel"
-                            customStyles={{
-                                dateIcon: {
-                                    position: 'absolute',
-                                    left: 0,
-                                    top: 4,
-                                    marginLeft: 0
-                                },
-                                dateInput: {
-                                    marginLeft: 36
-                                }
-                                // ... You can check the source to find the other keys.
-                            }}
-                            onDateChange={(date) =>{self._onChange({end_date: date})}}
-                        />
-                    </View>
+                <Card style={{flex:4,alignItems:'center'}}>
+                    <TextField
+                        parent={self}
+                        name={'description'}
+                        header={'Description'}
+                        required={false}
+                    />
+                    <DateField
+                        parent={self}
+                        name={'start_date'}
+                        header={'Select Start Date'}
+                        required={false}
+                    />
+                    <DateField
+                        parent={self}
+                        name={'end_date'}
+                        header={'Select End Date'}
+                        required={false}
+                    />
                 </Card>
                 <Card style={{flex:1}}>
                     <View style={{flexDirection:'column'}}>
@@ -148,8 +87,7 @@ class AddHunt extends React.Component{
                             <Button
                                 title={"Save"}
                                 onPress={()=>{return self.saveHunt()
-                                    .then((hunt)=>{
-                                        console.log('NEW HUNT SAVED',hunt);
+                                    .then(()=>{
                                         self.callParent();
                                     })
                                 }}
@@ -161,8 +99,6 @@ class AddHunt extends React.Component{
                                 onPress={()=>{self.callParent()}}
                             />
                         </View>
-
-
                     </View>
                 </Card>
             </View>

@@ -1,8 +1,9 @@
-import { LOGGED_IN } from './action-types';
+import { postApi} from "../services/huntdb";
 
 let defaultState = {
     auth:{
-        loggedIn: false
+        loggedIn: false,
+        fbLogin: false,
     },
     userId:1,
     lookups:{}
@@ -10,10 +11,9 @@ let defaultState = {
 
 const reducers = (state = defaultState, action) =>{
     switch(action.type){
-        case LOGGED_IN:
-            console.log(action);
-            Object.assign({},state.auth,{loggedIn:true});
-            return state.userId;
+        case "update-account":
+            Object.assign({...defaultState,...action.payload});
+            return state;
         default:
             return state;
     }
