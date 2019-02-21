@@ -16,6 +16,33 @@ class FBLoginButton extends Component{
         let self = this;
         console.log(self);
     }
+    login(err,res){
+        if(err){
+            alert('something went wrong ' + err);
+            return;
+        }
+        postApi('FacebookAccount/Login',{
+            facebook_id: res.id,
+            email: res.email,
+            name: res.name
+        })
+            .then((res)=>{
+                this.props.dispatch({
+                    type: 'update-account',
+                    payload:{
+                        account:{
+                            facebook_id: res.data.account.facebook_id,
+                            name: res.data.account.name,
+                            email: res.data.account.email,
+                            Account_id: res.data.account.Account_id
+                        }
+                    }
+                });
+                if(res.data.loggedIn){
+                    self.props.navigation.navigate('MainMenu');
+                }
+            });
+    }
     render(){
         let self = this;
         return (
@@ -32,33 +59,7 @@ class FBLoginButton extends Component{
                                 const infoRequest = new GraphRequest(
                                     '/me?fields=name,picture,email',
                                     null,
-                                    (err,res)=>{
-                                        if(err){
-                                            alert('something went wrong ' + err);
-                                            return;
-                                        }
-                                        postApi('FacebookAccount/Login',{
-                                            facebook_id: res.id,
-                                            email: res.email,
-                                            name: res.name
-                                        })
-                                            .then((res)=>{
-                                                this.props.dispatch({
-                                                   type: 'update-account',
-                                                   payload:{
-                                                       account:{
-                                                           facebook_id: res.data.account.facebook_id,
-                                                           name: res.data.account.name,
-                                                           email: res.data.account.email,
-                                                           Account_id: res.data.account.Account_id
-                                                       }
-                                                   }
-                                                });
-                                                if(res.data.loggedIn){
-                                                    self.props.navigate('MainMenu');
-                                                }
-                                            });
-                                    }
+                                    this.login
                                 );
                                 // Start the graph request.
                                 new GraphRequestManager().addRequest(infoRequest).start();
@@ -71,5 +72,10 @@ class FBLoginButton extends Component{
         )
     }
 }
+const mapStateToProps = (state)=>{
+    console.log(state);
+    return{
 
-export default connect()(FBLoginButton)
+    }
+};
+export default connect(mapStateToProps,null)(FBLoginButton)
