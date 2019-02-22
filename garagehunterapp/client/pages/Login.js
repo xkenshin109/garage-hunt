@@ -4,6 +4,7 @@ import {LoginButton,LoginManager, AccessToken, GraphRequest, GraphRequestManager
 import {styles} from './PageStyles';
 import {connect} from 'react-redux';
 import {postApi} from "../services/huntdb";
+import {bindActionCreators} from "redux";
 
 class FBLoginButton extends Component{
     constructor(props){
@@ -75,7 +76,12 @@ class FBLoginButton extends Component{
 const mapStateToProps = (state)=>{
     console.log(state);
     return{
-
+        account: state.passport.account
     }
 };
-export default connect(mapStateToProps,null)(FBLoginButton)
+const mapDispatch = (dispatch)=>{
+    return bindActionCreators({
+
+    },dispatch);
+};
+export default connect(mapStateToProps,mapDispatch)(FBLoginButton)

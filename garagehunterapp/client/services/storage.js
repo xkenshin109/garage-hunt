@@ -1,43 +1,25 @@
 import {AsyncStorage} from 'react-native';
-//
-// function StoreData(){
-//
-// }
-// StoreData.prototype.storeData = async (key,value) =>{
-//     try{
-//         await AsyncStorage.setItem(key,value);
-//     }catch(err){
-//         //What can you do ya know
-//     }
-// };
-//
-// StoreData.prototype.getData = async (key) =>{
-//     try{
-//         const value = await AsyncStorage.getItem(key,function(val){
-//             return val
-//         });
-//         return value;
-//     }catch(err){
-//         //TODO: figure out how to handle this. Technical debt is coming :'(
-//     }
-// };
+import Promise from 'bluebird';
 
-export const storeData = async (key,value) =>{
-    try{
-        await AsyncStorage.setItem(key,value);
-    }catch(err){
-        //What can you do ya know
-    }
-};
-
-export const getData = async (key) => {
-    try {
-        const value = await AsyncStorage.getItem(key, function (val) {
-            return val
+export const storeData = (key,value) =>{
+    return Promise.resolve()
+        .then(async()=>{
+            let val = JSON.stringify(value);
+            await AsyncStorage.setItem(key,val);
         });
-        return value;
-    } catch (err) {
-        //TODO: figure out how to handle this. Technical debt is coming :'(
-    }
 };
-// export default StoreData()
+
+export const getData = (key) => {
+    return Promise.resolve()
+        .then(async ()=>{
+            try {
+                return await AsyncStorage.getItem(key,function(err,val){
+                    if(!val || err)return null;
+                    return JSON.parse(val);
+                })
+
+            } catch (err) {
+                return err;
+            }
+        });
+};
