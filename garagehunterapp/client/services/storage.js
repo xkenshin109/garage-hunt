@@ -15,7 +15,11 @@ export const getData = (key) => {
             try {
                 return await AsyncStorage.getItem(key,function(err,val){
                     if(!val || err)return null;
-                    return JSON.parse(val);
+                    if(val === "null"){
+                        return null;
+                    }
+                    let v = val.replace(/"/g,'');
+                    return v;
                 })
 
             } catch (err) {

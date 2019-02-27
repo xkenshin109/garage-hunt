@@ -7,28 +7,22 @@ import {connect} from 'react-redux';
 import HuntTableList from '../components/HuntTableList';
 import AddHunt from '../components/AddHunt';
 import HuntDetails from '../components/HuntDetails';
-import {Icon} from "react-native-elements";
-export const mapStateToProps = state => {
-    console.log('HUNTS',state);
-    return {
-        user_id: state.passport.userId
-    }
-};
 
-export const mapDispatchToProps = dispatch => {
-    return {
-
-    }
-};
-class ListingsPage extends React.Component{
+class HuntsPage extends React.Component{
 
     constructor(props){
         super(props);
     }
     state ={
         loaded: true,
-        showModal:false
+        showModal:false,
+        profile_pic:null,
+        Account_id:null,
+        facebook_id:null,
+        name: null,
+        email:null
     };
+
     showModal(show){
         this.setState({showModal:show});
     }
@@ -41,13 +35,23 @@ class ListingsPage extends React.Component{
     }
     render() {
         let self = this;
+        let parent = self.props.screenProps.parent;
         if(self.state.showModal){
             return (
                 <View style={styles.container}>
                     <AddHunt
                         parent={self}
-                        user_id={self.props.user_id}
+                        Account_id={parent.state.Account_id}
+                        facebook_id={parent.state.facebook_id}
                     />
+                </View>
+            )
+        }
+
+        if(!parent.state.Account_id && !parent.state.facebook_id){
+            return(
+                <View style={styles.container}>
+                    <Text>There is no user logged in</Text>
                 </View>
             )
         }
@@ -58,7 +62,8 @@ class ListingsPage extends React.Component{
                     onPress={()=>{self.showModal(true)}}
                 />
                 <HuntTableList
-                    user_id = {self.props.user_id}
+                    Account_id = {parent.state.Account_id}
+                    facebook_id = {parent.state.facebook_id}
                     parent = {self}
                 />
             </View>
@@ -67,7 +72,8 @@ class ListingsPage extends React.Component{
 }
 const stackExport = createStackNavigator({
     Hunts: {
-        screen: connect(mapStateToProps,mapDispatchToProps)(ListingsPage),
+        // screen: connect(mapStateToProps,mapDispatchToProps)(ListingsPage),
+        screen: HuntsPage,
     },
     Details:{
         screen: HuntDetails,

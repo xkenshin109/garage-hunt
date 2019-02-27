@@ -29,7 +29,6 @@ class HuntTableList extends React.Component{
     showDetails=(hunt,show)=>{
         let self = this;
         self.props.parent.showDetails(hunt);
-        // self.setState({selectedHunt:hunt,showDetails:show});
     };
     render() {
         let self = this;
@@ -40,14 +39,13 @@ class HuntTableList extends React.Component{
                 </View>
             )
         }
-        // if(self.state.showDetails && self.state.selectedHunt){
-        //     return(
-        //         <HuntDetails
-        //             hunt={self.state.selectedHunt}
-        //             parent={self}
-        //         />
-        //     );
-        // }
+        if(!self.props.Account_id && !self.props.facebook_id){
+            return(
+                <View style={styles.container}>
+                    <Text>There is no user logged in</Text>
+                </View>
+            )
+        }
         return (
             <View style={styles.container}>
                 <FlatList
@@ -55,7 +53,7 @@ class HuntTableList extends React.Component{
                     renderItem={({item,index})=>
                         (
                             <HuntTableRow
-                                userId = {self.props.user_id}
+                                userId = {self.props.Account_id}
                                 hunt = {item.item}
                                 color = {index%2===0?'even':'odd'}
                                 parent = {self}
@@ -67,20 +65,5 @@ class HuntTableList extends React.Component{
     );
     }
 }
-// const stackExport = createStackNavigator({
-//     HuntTableList: {
-//         screen: HuntTableList,
-//         navigationOptions:{
-//             title:'Hunts'
-//         }
-//     },
-//     HuntDetails: {
-//         screen: HuntDetails,
-//         navigationOptions: {
-//             title:'Details'
-//         }
-//     }
-// });
-// export default HomePage
 export default HuntTableList;
 

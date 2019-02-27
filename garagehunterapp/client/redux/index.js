@@ -1,9 +1,7 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import thunk  from 'redux-thunk';
-import reducers from './reducers';
-const rootReducer = combineReducers({
-     passport: reducers
-});
+import {rootReducer}from './reducers';
+
 const configureStore = () =>{
     return createStore(rootReducer,applyMiddleware(thunk));
 };

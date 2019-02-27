@@ -37,7 +37,7 @@ class AddHunt extends React.Component{
     saveHunt = ()=>{
         let self = this;
         let hunt = self.state.newHunt;
-        hunt.Account_id = self.props.user_id;
+        hunt.Account_id = self.props.Account_id;
         return postApi('Hunts/Address',hunt);
     };
     updateState = (data)=>{

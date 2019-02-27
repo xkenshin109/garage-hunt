@@ -7,18 +7,18 @@ import {connect} from 'react-redux';
 import HuntTableList from '../components/HuntTableList';
 import AddHunt from '../components/AddHunt';
 import {Icon} from "react-native-elements";
-export const mapStateToProps = state => {
-    console.log('HUNTS',state);
-    return {
-        user_id: state.passport.userId
-    }
-};
-
-export const mapDispatchToProps = dispatch => {
-    return {
-
-    }
-};
+// export const mapStateToProps = state => {
+//     console.log('HUNTS',state);
+//     return {
+//         user_id: state.passport.userId
+//     }
+// };
+//
+// export const mapDispatchToProps = dispatch => {
+//     return {
+//
+//     }
+// };
 class FavoritesPage extends React.Component{
     constructor(props){
         super(props);
@@ -26,7 +26,12 @@ class FavoritesPage extends React.Component{
     state ={
         loaded: true,
         showModal:false,
-        showDetails:false
+        showDetails:false,
+        profile_pic:null,
+        Account_id:null,
+        facebook_id:null,
+        name: null,
+        email:null
     };
     showModal(show){
         this.setState({showModal:show});
@@ -58,7 +63,8 @@ class FavoritesPage extends React.Component{
 }
 const stackExport = createStackNavigator({
     Favorites:{
-        screen:connect(mapStateToProps,mapDispatchToProps)(FavoritesPage),
+        screen:FavoritesPage,
+        //screen:connect(mapStateToProps,mapDispatchToProps)(FavoritesPage),
         navigationOptions:({navigation})=>({
             tabBarIcon: <Icon color='#f50' name='favorite-border' size={30} />
         })

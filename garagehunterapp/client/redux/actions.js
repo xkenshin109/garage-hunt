@@ -1,9 +1,9 @@
-export const syncAccount = (payload)=>{
+export const syncAccount = (payload)=> {
     return {
         type: 'sync-account',
-        payload:{
+        payload: {
             facebook_id: payload.facebook_id,
-            account_id: payload.account_id,
+            Account_id: payload.Account_id,
             email: payload.email,
             name: payload.name
         }

@@ -1,87 +1,88 @@
 import React, {Component} from 'react';
-import {View} from 'react-native';
+import {View, Button, TouchableHighlight, Text} from 'react-native';
+import {Divider} from "react-native-elements";
 import {LoginButton,LoginManager, AccessToken, GraphRequest, GraphRequestManager} from 'react-native-fbsdk';
 import {styles} from './PageStyles';
-import {connect} from 'react-redux';
-import {postApi} from "../services/huntdb";
-import {bindActionCreators} from "redux";
+import {postApi,getExternalApi} from "../services/huntdb";
 
-class FBLoginButton extends Component{
+class LoginScreen extends Component{
     constructor(props){
-        super(props)
+        super(props);
     }
     state = {
-        accessToken:null
+
     };
-    componentDidMount() {
+    fbLogin(){
         let self = this;
-        console.log(self);
+
     }
-    login(err,res){
-        if(err){
-            alert('something went wrong ' + err);
-            return;
-        }
-        postApi('FacebookAccount/Login',{
-            facebook_id: res.id,
-            email: res.email,
-            name: res.name
-        })
-            .then((res)=>{
-                this.props.dispatch({
-                    type: 'update-account',
-                    payload:{
-                        account:{
-                            facebook_id: res.data.account.facebook_id,
-                            name: res.data.account.name,
-                            email: res.data.account.email,
-                            Account_id: res.data.account.Account_id
-                        }
-                    }
-                });
-                if(res.data.loggedIn){
-                    self.props.navigation.navigate('MainMenu');
-                }
-            });
-    }
+
     render(){
         let self = this;
+
         return (
             <View style={styles.container}>
+                <TouchableHighlight style={styles.buttonStyle}>
+                    <Text>Login with email</Text>
+                </TouchableHighlight>
+                <TouchableHighlight style={styles.buttonStyle}>
+                    <Text>Register</Text>
+                </TouchableHighlight>
+                <Divider style={{backgroundColor:'black'}}/>
                 <LoginButton
-                    readPermissions={["email"]}
-                    onLoginFinished={
-                        (error,result)=>{
-                            if(error){
-                                alert('Login failed with error:' + error.message);
-                            }else if(result.isCancelled){
-                                alert('Login was cancelled');
-                            }else{
-                                const infoRequest = new GraphRequest(
-                                    '/me?fields=name,picture,email',
-                                    null,
-                                    this.login
-                                );
-                                // Start the graph request.
-                                new GraphRequestManager().addRequest(infoRequest).start();
-                            }
+                readPermissions={["email"]}
+                onLoginFinished={
+                    (error,result)=>{
+                        if(error){
+                            alert('Login failed with error:' + error.message);
+                        }else if(result.isCancelled){
+                            alert('Login was cancelled');
+                        }else{
+                            const infoRequest = new GraphRequest(
+                                '/me?fields=name,picture,email',
+                                null,
+                                (err,res)=>{
+                                    if(err){
+                                        alert('something went wrong ' + err);
+                                        return;
+                                    }
+                                    getExternalApi(res.picture.data.url)
+                                        .then((pic)=>{
+                                            return postApi('FacebookAccount/Login',{
+                                                facebook_id: res.id,
+                                                email: res.email,
+                                                name: res.name,
+                                                profile_pic: pic
+                                            })
+                                        })
+
+                                        .then((res)=>{
+                                            self.props.screenProps.parent._changeState({
+                                                facebook_id: res.data.account.facebook_id,
+                                                name: res.data.account.name,
+                                                email: res.data.account.email,
+                                                Account_id: res.data.account.Account_id
+                                            });
+                                            self.props.navigation.navigate('MainMenu',...parent.state);
+                                        });
+                                }
+                            );
+                            // Start the graph request.
+                            new GraphRequestManager().addRequest(infoRequest).start();
                         }
                     }
-                    onLogoutFinished={()=> alert('user logged out')}
-                />
+                }
+                onLogoutFinished={()=> {
+                    self.props.screenProps.parent._changeState({
+                        facebook_id:null,
+                        name:null,
+                        email:null,
+                        Account_id: null
+                    });
+                }}
+            />
             </View>
         )
     }
 }
-const mapStateToProps = (state)=>{
-    console.log(state);
-    return{
-        account: state.passport.account
-    }
-};
-const mapDispatch = (dispatch)=>{
-    return bindActionCreators({
-
-    },dispatch);
-};
-export default connect(mapStateToProps,mapDispatch)(FBLoginButton)
+export default LoginScreen

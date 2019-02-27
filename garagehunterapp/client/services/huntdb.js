@@ -11,7 +11,17 @@ export const getApi = (method) =>{
             console.log(err);
         });
 };
-
+export const getExternalApi = (method) =>{
+    return fetch(`${method}`,{
+        method:'GET'
+    })
+        .then((res)=>{
+            return res._bodyText;
+        })
+        .catch((err)=>{
+            console.log(err);
+        });
+};
 export const postApi = (method,data) =>{
     return fetch(`${config.api.baseUrl}${method}`,{
         headers:{

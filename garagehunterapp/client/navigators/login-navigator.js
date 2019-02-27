@@ -1,5 +1,5 @@
 import { createStackNavigator } from 'react-navigation';
-import {DrawNavigator} from './drawer-navigation';
+// import {DrawNavigator} from './drawer-navigation';
 import {Icon}  from 'react-native-elements';
 import React from "react";
 
@@ -8,20 +8,12 @@ import Login from '../pages/Login';
 const LoginNavigator = createStackNavigator({
     // FavoritesScreen: Favorites,
     // HuntsScreen: Hunts,
-    Login: Login,
-    MainMenu: createStackNavigator({
-        DrawNav: DrawNavigator
-    },{
-        initialRouteName:'DrawNav',
-        navigationOptions: ({navigation}) => ({
-            title: 'Welcome!',
-            headerTintColor: 'white',
-            headerStyle:{backgroundColor: '#0000d6'},
-            headerLeft: <Icon color='#f50' name='reorder' size={40} onPress={()=>{
-                navigation.state.isDrawerOpen?navigation.closeDrawer():navigation.openDrawer();
-            }} />
-        })
-    })
+    Login: {
+        screen: Login,
+        // screenProps:  this.props
+    },
+    //TODO: This is where we are going to have our Login
+    // MainMenu:
 },{
     initialRouteName:'Login',
     navigationOptions: ({navigation}) => ({
